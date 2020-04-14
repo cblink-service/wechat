@@ -14,6 +14,15 @@ class AuthUrlTest extends TestCase
         $authUrl = $this->openPlatform()
             ->getPreAuthorizationUrl('http://localhost', ['auth_type' => 3]);
 
-        $this->assertTrue(filter_var($authUrl, FILTER_VALIDATE_URL));
+        $this->assertTrue((boolean) filter_var($authUrl, FILTER_VALIDATE_URL));
+    }
+
+    public function testTicket()
+    {
+        $ticket = $this->openPlatform()
+            ->verify_ticket
+            ->getTicket();
+
+        $this->assertIsString($ticket);
     }
 }

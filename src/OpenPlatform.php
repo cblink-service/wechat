@@ -1,6 +1,7 @@
 <?php
 namespace Cblink\Service\Wechat;
 
+use Cblink\Service\Wechat\OpenPlatform\VerifyTicket;
 use InvalidArgumentException;
 use EasyWeChat\OpenPlatform\Application;
 use Cblink\Service\Wechat\OpenPlatform\Application as ClinkApplication;
@@ -29,8 +30,19 @@ class OpenPlatform
     public function __construct(array $config = [], ClinkApplication $cblinkApp = null)
     {
         $this->config = $config;
-        $this->app = new Application($config['wechat']);
         $this->cblinkApp = $cblinkApp ?? new ClinkApplication($config);
+        $this->app = $this->initApp($config['wechat']);
+    }
+
+    protected function initApp(array $config = [])
+    {
+        $app = new Application($config);
+
+        $app->rebind('verify_ticket', function($app){
+            return new VerifyTicket($app, $this->cblinkApp);
+        });
+
+        return $app;
     }
 
     /**
