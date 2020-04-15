@@ -98,7 +98,7 @@ class OpenPlatform
      */
     public function __call($name, $arguments)
     {
-        return call_user_func_array([$this->app, 'name'], $arguments);
+        return call_user_func_array([$this->app, $name], $arguments);
     }
 
     /**
