@@ -31,9 +31,13 @@ class OpenPlatform
     {
         $this->config = $config;
         $this->cblinkApp = $cblinkApp ?? new ClinkApplication($config);
-        $this->app = $this->initApp($config['wechat']);
+        $this->app = $this->initApp($config['open-platform']);
     }
 
+    /**
+     * @param array $config
+     * @return Application
+     */
     protected function initApp(array $config = [])
     {
         $app = new Application($config);
