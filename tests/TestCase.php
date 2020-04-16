@@ -24,14 +24,12 @@ class TestCase extends BaseTestCase
     {
         $config = [
             // 配置信息
-            'config' => [
-                'private' => true,
-                'base_url' => 'http://127.0.0.1//',
-                'app_id' => 1,
-                'key' => 'test',
-                'secret' => 'test',
-            ],
-            'wechat' => [
+            'private' => true,
+            'base_url' => 'http://127.0.0.1//',
+            'app_id' => 1,
+            'key' => 'test',
+            'secret' => 'test',
+            'open-platform' => [
                 'app_id' => 'test',
                 'secret' => 'test',
                 'token' => 'test',
@@ -39,7 +37,7 @@ class TestCase extends BaseTestCase
             ]
         ];
 
-        if (file_exists($fileName =__DIR__.'/../config/open-platform.php')){
+        if (file_exists($fileName =__DIR__.'/../config/service-wechat.php')){
             $config = include $fileName;
         }
 
