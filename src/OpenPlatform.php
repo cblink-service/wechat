@@ -65,6 +65,19 @@ class OpenPlatform
     }
 
     /**
+     * 绑定公众号/小程序到账户下
+     *
+     * @param string $appId
+     * @return bool
+     */
+    public function bindAppId(string $appId)
+    {
+        $result = $this->cblinkApp->auth->bindAppId($appId);
+
+        return $result->success();
+    }
+
+    /**
      * 获取移动端授权链接
      *
      * @param string $callbackUrl
