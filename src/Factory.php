@@ -15,4 +15,9 @@ class Factory
     {
         return new OpenPlatform($config);
     }
+
+    public static function officialAccount($config)
+    {
+        return new OfficialAccount($config);
+    }
 }
