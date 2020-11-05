@@ -1,6 +1,7 @@
 <?php
 namespace Cblink\Service\Wechat;
 
+use Cblink\Service\Wechat\OpenPlatform\AccessToken;
 use Cblink\Service\Wechat\OpenPlatform\VerifyTicket;
 use InvalidArgumentException;
 use EasyWeChat\OpenPlatform\Application;
@@ -9,6 +10,8 @@ use Cblink\Service\Wechat\OpenPlatform\Application as ClinkApplication;
 /**
  * Class OpenPlatform
  * @mixin Application
+ * @property-read AccessToken $access_token
+ * @property-read VerifyTicket $verify_ticket
  */
 class OpenPlatform
 {
@@ -44,6 +47,10 @@ class OpenPlatform
 
         $app->rebind('verify_ticket', function($app){
             return new VerifyTicket($app, $this->cblinkApp);
+        });
+
+        $app->rebind('access_token', function($app){
+            return new AccessToken($app, $this->cblinkApp);
         });
 
         return $app;

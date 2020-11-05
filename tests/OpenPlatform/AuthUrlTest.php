@@ -25,4 +25,13 @@ class AuthUrlTest extends TestCase
 
         $this->assertIsString($ticket);
     }
+
+    public function testAccessToken()
+    {
+        $token = $this->openPlatform()
+            ->access_token
+            ->getToken();
+
+        $this->assertIsString($token['component_access_token']);
+    }
 }
