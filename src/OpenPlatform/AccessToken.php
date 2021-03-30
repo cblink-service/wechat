@@ -14,12 +14,12 @@ class AccessToken extends \EasyWeChat\OpenPlatform\Auth\AccessToken
     /**
      * @var \Cblink\Service\Wechat\OpenPlatform\Application
      */
-    protected $cblinkApp;
+    protected $openPlatformApp;
 
-    public function __construct(ServiceContainer $app, $cblinkApp = null)
+    public function __construct(ServiceContainer $app, $openPlatformApp = null)
     {
         parent::__construct($app);
-        $this->cblinkApp = $cblinkApp;
+        $this->openPlatformApp = $openPlatformApp;
     }
 
     /**
@@ -31,7 +31,7 @@ class AccessToken extends \EasyWeChat\OpenPlatform\Auth\AccessToken
      */
     public function requestToken(array $credentials, $toArray = false)
     {
-        $response = $this->cblinkApp->auth->getAccessToken();
+        $response = $this->openPlatformApp->auth->getAccessToken();
 
         return [
             $this->tokenKey => $response->get('token'),

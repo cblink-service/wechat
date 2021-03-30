@@ -1,27 +1,22 @@
 <?php
 namespace Cblink\Service\Wechat;
 
+use Cblink\Service\Wechat\OpenPlatform\Application as OpenPlatformApp;
+
 /**
  * Class Factory
  * @package Cblink\Service\Wechat
  */
-class Factory
+class Factory extends \EasyWeChat\Factory
 {
     /**
      * @param $config
      * @return OpenPlatform
      */
-    public static function openPlatform($config)
+    public static function openPlatform(array $config)
     {
-        return new OpenPlatform($config);
-    }
+        $app = new OpenPlatformApp($config);
 
-    /**
-     * @param $config
-     * @return OfficialAccount
-     */
-    public static function officialAccount($config)
-    {
-        return new OfficialAccount($config);
+        return new OpenPlatform($app);
     }
 }

@@ -13,7 +13,7 @@
     "require": {
         "php": ">=7.2",
         "overtrue/wechat": "^5.0|^4.2",
-        "cblink-service/wechat-open-platform": "^0.1.0"
+        "cblink-service/wechat-open-platform": "^0.1.1"
     },
     "autoload": {
         "psr-4": {

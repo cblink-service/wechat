@@ -3,9 +3,10 @@ namespace Cblink\Service\Wechat;
 
 use Cblink\Service\Wechat\OpenPlatform\AccessToken;
 use Cblink\Service\Wechat\OpenPlatform\VerifyTicket;
+use Illuminate\Support\Facades\Cache;
 use InvalidArgumentException;
 use EasyWeChat\OpenPlatform\Application;
-use Cblink\Service\Wechat\OpenPlatform\Application as ClinkApplication;
+use Cblink\Service\Wechat\OpenPlatform\Application as OpenPlatformApp;
 
 /**
  * Class OpenPlatform
@@ -26,34 +27,44 @@ class OpenPlatform
     protected $app;
 
     /**
-     * @var ClinkApplication
+     * @var OpenPlatformApp
      */
-    protected $cblinkApp;
+    protected $openPlatformApp;
 
-    public function __construct(array $config = [], ClinkApplication $cblinkApp = null)
+    public function __construct(OpenPlatformApp $openPlatformApp)
     {
-        $this->config = $config;
-        $this->cblinkApp = $cblinkApp ?? new ClinkApplication($config);
-        $this->app = $this->initApp($config['open-platform']);
+        $this->openPlatformApp = $openPlatformApp;
+        $this->app = $this->initApp();
     }
 
     /**
-     * @param array $config
      * @return Application
      */
-    protected function initApp(array $config = [])
+    protected function initApp(): Application
     {
-        $app = new Application($config);
+        $app = new Application($this->getConfigure()->toArray());
 
         $app->rebind('verify_ticket', function($app){
-            return new VerifyTicket($app, $this->cblinkApp);
+            return new VerifyTicket($app, $this->openPlatformApp);
         });
 
         $app->rebind('access_token', function($app){
-            return new AccessToken($app, $this->cblinkApp);
+            return new AccessToken($app, $this->openPlatformApp);
         });
 
         return $app;
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getConfigure()
+    {
+        $cacheKey = sprintf('open-platform-%s', $this->openPlatformApp->getUuid());
+
+        return Cache::remember($cacheKey, 600, function(){
+            return $this->openPlatformApp->configure->show();
+        });
     }
 
     /**
@@ -79,7 +90,7 @@ class OpenPlatform
      */
     public function bindAppId(string $appId)
     {
-        $result = $this->cblinkApp->auth->bindAppId($appId);
+        $result = $this->openPlatformApp->auth->bindAppId($appId);
 
         return $result->success();
     }
@@ -106,7 +117,7 @@ class OpenPlatform
      */
     protected function getAuthorizationUrl(array $payload = [])
     {
-        $response = $this->cblinkApp->auth->getAuthUrl($payload);
+        $response = $this->openPlatformApp->auth->getAuthUrl($payload);
 
         if (!$response->success()){
             throw new InvalidArgumentException('Get Url Fail: '. $response->errMsg());
