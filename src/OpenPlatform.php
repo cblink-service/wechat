@@ -62,9 +62,21 @@ class OpenPlatform
     {
         $cacheKey = sprintf('open-platform-%s', $this->openPlatformApp->getUuid());
 
-        return Cache::remember($cacheKey, 600, function(){
+        return Cache::remember($cacheKey, 7200, function(){
             return $this->openPlatformApp->configure->show();
         });
+    }
+
+    /**
+     * @return $this
+     */
+    public function clearConfigCache()
+    {
+        $cacheKey = sprintf('open-platform-%s', $this->openPlatformApp->getUuid());
+
+        Cache::forget($cacheKey);
+
+        return $this;
     }
 
     /**
