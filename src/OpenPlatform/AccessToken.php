@@ -33,9 +33,11 @@ class AccessToken extends \EasyWeChat\OpenPlatform\Auth\AccessToken
     {
         $response = $this->openPlatformApp->auth->getAccessToken();
 
+        $expires = (int) $response->get('created_time') + 7200 - time();
+
         return [
             $this->tokenKey => $response->get('token'),
-            'expires_in' => ((int) $response->get('created_time') + 7200 - time())
+            'expires_in' => $expires > 180 ? 180 : $expires
         ];
     }
 }
