@@ -1,27 +1,18 @@
 <?php
 
 
-namespace Cblink\Service\Wechat\OpenPlatform;
+namespace Cblink\Service\Wechat\CustomOpenPlatform\Auth;
 
-use EasyWeChat\Kernel\ServiceContainer;
+
+use Cblink\Service\Wechat\OpenPlatform;
 
 /**
  * Class AccessToken
  * @package Cblink\Service\Wechat\OpenPlatform
+ * @property-read OpenPlatform $app
  */
 class AccessToken extends \EasyWeChat\OpenPlatform\Auth\AccessToken
 {
-    /**
-     * @var \Cblink\Service\Wechat\OpenPlatform\Application
-     */
-    protected $openPlatformApp;
-
-    public function __construct(ServiceContainer $app, $openPlatformApp = null)
-    {
-        parent::__construct($app);
-        $this->openPlatformApp = $openPlatformApp;
-    }
-
     /**
      * 获取token
      *
@@ -31,13 +22,13 @@ class AccessToken extends \EasyWeChat\OpenPlatform\Auth\AccessToken
      */
     public function requestToken(array $credentials, $toArray = false)
     {
-        $response = $this->openPlatformApp->auth->getAccessToken();
+        $response = $this->app->getService()->auth->getAccessToken();
 
         $expires = (int) $response->get('created_time') + 7200 - time();
 
         return [
             $this->tokenKey => $response->get('token'),
-            'expires_in' => $expires > 180 ? 180 : $expires
+            'expires_in' => $expires
         ];
     }
 }

@@ -2,6 +2,7 @@
 namespace Cblink\Service\Wechat\Tests\Platform;
 
 use Cblink\Service\Wechat\Tests\TestCase;
+use function GuzzleHttp\default_user_agent;
 
 /**
  * Class AuthUrlTest
@@ -14,6 +15,8 @@ class AuthUrlTest extends TestCase
         $authUrl = $this->openPlatform()
             ->getPreAuthorizationUrl('http://localhost', ['auth_type' => 3]);
 
+        // var_dump($authUrl);
+
         $this->assertTrue((boolean) filter_var($authUrl, FILTER_VALIDATE_URL));
     }
 
@@ -22,6 +25,8 @@ class AuthUrlTest extends TestCase
         $ticket = $this->openPlatform()
             ->verify_ticket
             ->getTicket();
+
+        // var_dump($ticket);
 
         $this->assertIsString($ticket);
     }

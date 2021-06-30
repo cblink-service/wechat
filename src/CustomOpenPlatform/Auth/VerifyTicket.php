@@ -1,28 +1,17 @@
 <?php
-namespace Cblink\Service\Wechat\OpenPlatform;
+namespace Cblink\Service\Wechat\CustomOpenPlatform\Auth;
 
+use Cblink\Service\Wechat\OpenPlatform;
 use EasyWeChat\Kernel\Exceptions\RuntimeException;
-use EasyWeChat\OpenPlatform\Application;
-use Cblink\Service\Wechat\OpenPlatform\Application as OpenPlatformApp;
 use EasyWeChat\OpenPlatform\Auth\VerifyTicket as EasyWechatVerifyTicket;
 
 /**
  * Class VerfyTicket
  * @package Cblink\Service\Wechat\OpenPlatform
+ * @property-read OpenPlatform $app
  */
 class VerifyTicket extends EasyWechatVerifyTicket
 {
-    /**
-     * @var \Cblink\Service\Wechat\OpenPlatform\Application
-     */
-    protected $openPlatformApp;
-
-    public function __construct(Application $app, OpenPlatformApp $openPlatformApp)
-    {
-        parent::__construct($app);
-        $this->openPlatformApp = $openPlatformApp;
-    }
-
     /**
      * Get the credential `component_verify_ticket` from cache.
      *
@@ -38,7 +27,7 @@ class VerifyTicket extends EasyWechatVerifyTicket
             return $cached;
         }
 
-        $ticket = $this->openPlatformApp->auth->getTicket();
+        $ticket = $this->app->getService()->auth->getTicket();
 
         if ($ticket->success()){
             return $ticket->get('ticket');
