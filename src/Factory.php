@@ -53,7 +53,7 @@ class Factory
         $cacheKey = sprintf('open-platform-%s', $client->getUuid());
 
         return Cache::remember($cacheKey, 7200, function() use($client){
-            return $client->configure->show();
+            return $client->configure->show()->toArray();
         });
     }
 }
