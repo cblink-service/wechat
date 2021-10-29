@@ -1,14 +1,13 @@
 <?php
-namespace Cblink\Service\Wechat\CustomOpenPlatform\Auth;
+namespace Cblink\Service\Wechat\CustomOpenPlatform;
 
-use Cblink\Service\Wechat\OpenPlatform;
 use EasyWeChat\Kernel\Exceptions\RuntimeException;
 use EasyWeChat\OpenPlatform\Auth\VerifyTicket as EasyWechatVerifyTicket;
 
 /**
  * Class VerfyTicket
  * @package Cblink\Service\Wechat\OpenPlatform
- * @property-read OpenPlatform $app
+ * @property-read Application $app
  */
 class VerifyTicket extends EasyWechatVerifyTicket
 {
@@ -27,7 +26,7 @@ class VerifyTicket extends EasyWechatVerifyTicket
             return $cached;
         }
 
-        $ticket = $this->app->getService()->auth->getTicket();
+        $ticket = $this->app->service->auth->getTicket();
 
         if ($ticket->success()){
             return $ticket->get('ticket');
