@@ -38,4 +38,33 @@ class BaseClient extends Client
 
         return $result->success();
     }
+
+    /**
+     * 获取web端授权链接
+     *
+     * @param string $callbackUrl
+     * @param array $optional
+     * @return string
+     */
+    public function getPreAuthorizationUrl(string $callbackUrl, $optional = []): string
+    {
+        return $this->getAuthorizationUrl(array_merge($optional,[
+            'type' => 'scan',
+            'url' =>  $callbackUrl
+        ]));
+    }
+
+    /**
+     * 获取移动端授权链接
+     * @param string $callbackUrl
+     * @param array $optional
+     * @return string
+     */
+    public function getMobilePreAuthorizationUrl(string $callbackUrl, $optional = []): string
+    {
+        return $this->getAuthorizationUrl(array_merge($optional,[
+            'type' => 'mobile',
+            'url' =>  $callbackUrl
+        ]));
+    }
 }
