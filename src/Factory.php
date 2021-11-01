@@ -2,6 +2,7 @@
 
 namespace Cblink\Service\Wechat;
 
+use Cblink\Service\Kennel\HttpResponse;
 use Cblink\Service\Wechat\CustomOpenPlatform\AccessToken;
 use Cblink\Service\Wechat\CustomOpenPlatform\BaseClient;
 use Cblink\Service\Wechat\CustomOpenPlatform\VerifyTicket;
@@ -51,8 +52,14 @@ class Factory
     {
         $cacheKey = sprintf('open-platform-%s', $client->getUuid());
 
-        return Cache::remember($cacheKey, 7200, function() use($client){
+        $response = Cache::remember($cacheKey, 7200, function() use($client){
             return $client->configure->show()->toArray();
         });
+
+        if ($response instanceof HttpResponse) {
+            $response = $response->toArray();
+        }
+
+        return $response;
     }
 }
