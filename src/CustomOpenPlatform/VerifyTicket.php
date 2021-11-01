@@ -4,11 +4,6 @@ namespace Cblink\Service\Wechat\CustomOpenPlatform;
 use EasyWeChat\Kernel\Exceptions\RuntimeException;
 use EasyWeChat\OpenPlatform\Auth\VerifyTicket as EasyWechatVerifyTicket;
 
-/**
- * Class VerfyTicket
- * @package Cblink\Service\Wechat\OpenPlatform
- * @property-read Application $app
- */
 class VerifyTicket extends EasyWechatVerifyTicket
 {
     /**

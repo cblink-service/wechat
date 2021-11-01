@@ -2,7 +2,6 @@
 
 namespace Cblink\Service\Wechat;
 
-use EasyWeChat\OpenPlatform\Application;
 use Cblink\Service\Wechat\CustomOpenPlatform\AccessToken;
 use Cblink\Service\Wechat\CustomOpenPlatform\BaseClient;
 use Cblink\Service\Wechat\CustomOpenPlatform\VerifyTicket;
@@ -14,13 +13,13 @@ class Factory
      * 更换easywechat组件
      *
      * @param array $config
-     * @return Application|\EasyWeChat\OpenPlatform\Application
+     * @return \EasyWeChat\OpenPlatform\Application
      */
     public static function openPlatform(array $config = [])
     {
         $client = new \Cblink\Service\Wechat\OpenPlatform\Application($config);
 
-        $application = \EasyWeChat\Factory::openPlatform($client->configure->show()->toArray());
+        $application = \EasyWeChat\Factory::openPlatform(self::getConfigure($client));
 
         $application->rebind('service', function() use ($client){
             return $client;

@@ -5,11 +5,6 @@ namespace Cblink\Service\Wechat\CustomOpenPlatform;
 
 use Cblink\Service\Wechat\OpenPlatform;
 
-/**
- * Class AccessToken
- * @package Cblink\Service\Wechat\OpenPlatform
- * @property-read Application $app
- */
 class AccessToken extends \EasyWeChat\OpenPlatform\Auth\AccessToken
 {
     /**

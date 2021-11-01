@@ -5,9 +5,6 @@ namespace Cblink\Service\Wechat\CustomOpenPlatform;
 use InvalidArgumentException;
 use EasyWeChat\OpenPlatform\Base\Client;
 
-/**
- * @property-read Application $app
- */
 class BaseClient extends Client
 {
     /**
