@@ -5,17 +5,18 @@
     "authors": [
         {
             "name": "Nick",
-            "email": "nick@httpd.cc"
+            "email": "me@xieying.vip"
         }
     ],
-    "prefer-stable": true,
-    "minimum-stability": "dev",
     "require": {
-        "php": ">=7.2",
-        "cblink-service/wechat-open-platform": "^0.1.1"
+        "php": ">=7.4",
+        "ext-json": "*",
+        "cblink-service/foundation": "^1.1",
+        "ramsey/uuid": "^4.2"
     },
     "require-dev": {
-        "overtrue/wechat": "^5.0|^4.2"
+        "overtrue/wechat": "^5.0|^4.2",
+        "phpunit/phpunit": "^8.5"
     },
     "autoload": {
         "psr-4": {
@@ -26,8 +27,5 @@
         "psr-4": {
             "Cblink\\Service\\Wechat\\Tests\\": "tests/"
         }
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^8.5"
     }
 }

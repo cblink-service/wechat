@@ -1,8 +1,9 @@
 <?php
-namespace Cblink\Service\Wechat\CustomOpenPlatform;
+namespace Cblink\Service\Wechat\OpenPlatform\Rewrite;
 
 use EasyWeChat\Kernel\Exceptions\RuntimeException;
 use EasyWeChat\OpenPlatform\Auth\VerifyTicket as EasyWechatVerifyTicket;
+use Hyperf\Utils\Arr;
 
 class VerifyTicket extends EasyWechatVerifyTicket
 {
@@ -23,8 +24,8 @@ class VerifyTicket extends EasyWechatVerifyTicket
 
         $ticket = $this->app->service->auth->getTicket();
 
-        if ($ticket->success()){
-            return $ticket->get('ticket');
+        if (Arr::get($ticket, 'err_code') == 0){
+            return Arr::get($ticket, 'data.ticket');
         }
 
         throw new RuntimeException('Credential "component_verify_ticket" does not exist in cache.');

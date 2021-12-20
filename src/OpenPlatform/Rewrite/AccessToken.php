@@ -1,9 +1,9 @@
 <?php
 
-namespace Cblink\Service\Wechat\CustomOpenPlatform;
+namespace Cblink\Service\Wechat\OpenPlatform\Rewrite;
 
 
-use Cblink\Service\Wechat\OpenPlatform;
+use Hyperf\Utils\Arr;
 
 class AccessToken extends \EasyWeChat\OpenPlatform\Auth\AccessToken
 {
@@ -18,10 +18,10 @@ class AccessToken extends \EasyWeChat\OpenPlatform\Auth\AccessToken
     {
         $response = $this->app->service->auth->getAccessToken();
 
-        $expires = (int) $response->get('created_time') + 7200 - time();
+        $expires = (int) Arr::get($response, 'data.created_time', time()) + 7200 - time();
 
         return [
-            $this->tokenKey => $response->get('token'),
+            $this->tokenKey => Arr::get($response, 'data.token'),
             'expires_in' => $expires
         ];
     }

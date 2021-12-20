@@ -1,9 +1,10 @@
 <?php
 
-namespace Cblink\Service\Wechat\CustomOpenPlatform;
+namespace Cblink\Service\Wechat\OpenPlatform\Rewrite;
 
-use InvalidArgumentException;
 use EasyWeChat\OpenPlatform\Base\Client;
+use Hyperf\Utils\Arr;
+use InvalidArgumentException;
 
 class BaseClient extends Client
 {
@@ -16,8 +17,8 @@ class BaseClient extends Client
     {
         $response = $this->app->service->auth->getAuthUrl($payload);
 
-        if (!$response->success()){
-            throw new InvalidArgumentException('Get Url Fail: '. $response->errMsg());
+        if (Arr::get($response, 'err_code') != 0){
+            throw new InvalidArgumentException('Get Url Fail: '. Arr::get($response, 'err_msg'));
         }
 
         return $response->get('url');
@@ -31,9 +32,9 @@ class BaseClient extends Client
      */
     public function bindAppId(string $appId)
     {
-        $result = $this->app->service->auth->bindAppId($appId);
+        $response = $this->app->service->auth->bindAppId($appId);
 
-        return $result->success();
+        return Arr::get($response, 'err_code') == 0;
     }
 
     /**
