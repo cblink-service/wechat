@@ -21,7 +21,7 @@ class Factory
      */
     public static function openPlatform(array $config = [], $cache = null)
     {
-        $client = new \Cblink\Service\Wechat\OpenPlatform\Application($config);
+        $client = new OpenPlatform\Application($config);
 
         $application = \EasyWeChat\Factory::openPlatform(self::getConfigure($client, $cache));
 

@@ -12,16 +12,10 @@ use Cblink\Service\Foundation\Container;
  */
 class Application extends Container
 {
-    /**
-     * @inheritDoc
-     */
-    protected function getCustomProviders(): array
-    {
-        return [
-            Auth\ServiceProvider::class,
-            Configure\ServiceProvider::class,
-        ];
-    }
+    protected array $providers = [
+        Auth\ServiceProvider::class,
+        Configure\ServiceProvider::class,
+    ];
 
     /**
      * @return mixed
