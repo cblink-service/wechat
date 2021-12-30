@@ -72,6 +72,10 @@ class Factory
             return new OpenWork\Rewrite\AccessToken($app);
         });
 
+        $application->rebind('corp', function($app){
+            return new OpenWork\Rewrite\CorpClient($app);
+        });
+
         return $application;
     }
 

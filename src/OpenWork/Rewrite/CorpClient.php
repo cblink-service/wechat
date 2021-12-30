@@ -7,7 +7,7 @@ use EasyWeChat\OpenWork\Corp\Client;
 /**
  * @property \Cblink\Service\Wechat\OpenWork\Auth\Client $service
  */
-class CropClient extends Client
+class CorpClient extends Client
 {
     /**
      *  获取授权链接
