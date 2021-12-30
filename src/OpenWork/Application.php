@@ -8,6 +8,7 @@ class Application extends Container
 {
 
     protected array $providers = [
+        Configure\ServiceProvider::class,
         Auth\ServiceProvider::class,
     ];
 
