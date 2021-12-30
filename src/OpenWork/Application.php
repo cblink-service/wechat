@@ -4,6 +4,10 @@ namespace Cblink\Service\Wechat\OpenWork;
 
 use Cblink\Service\Foundation\Container;
 
+/**
+ * @property Configure\Client $configure
+ * @property Auth\Client $auth
+ */
 class Application extends Container
 {
 

@@ -2,6 +2,7 @@
 
 namespace Cblink\Service\Wechat;
 
+use EasyWeChat\OpenWork\Application;
 use Hyperf\Utils\Arr;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Cache\Psr16Cache;
@@ -62,14 +63,26 @@ class Factory
 
         $client = new OpenWork\Application($config);
 
-        $application = \EasyWeChat\Factory::openWork(self::getConfigure($client, $cache));
+        $response = self::getConfigure($client, $cache);
+
+        // 处理一下参数
+        $data = Arr::only($response, ['corp_id', 'aes_key', 'token']);
+        $data['secret'] = Arr::get($response, 'providerSecret');
+        $data['suite_id'] = Arr::get($response, 'app_id');
+        $data['suite_secret'] = Arr::get($response, 'secret');
+
+        // 这里需要预先加入 token信息
+        $application = new Application($data, [
+            'provider_access_token' => function($app){
+                return new OpenWork\Rewrite\AccessToken($app);
+            },
+            'suite_access_token' => function($app){
+                return new OpenWork\Rewrite\SuiteAccessToken($app);
+            }
+        ]);
 
         $application->rebind('service', function () use ($client) {
             return $client;
-        });
-
-        $application->rebind('access_token', function($app){
-            return new OpenWork\Rewrite\AccessToken($app);
         });
 
         $application->rebind('corp', function($app){
