@@ -47,7 +47,15 @@ class Factory
         return $application;
     }
 
-    public function openWork(array $config = [], $cache = null)
+    /**
+     * 更换easywechat组件
+     *
+     * @param array $config
+     * @param $cache
+     * @return \EasyWeChat\OpenWork\Application
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     */
+    public static function openWork(array $config = [], $cache = null)
     {
         // 优先使用企微开放平台uuid
         $config['uuid'] = $config['work_uuid'] ?? $config['uuid'];
