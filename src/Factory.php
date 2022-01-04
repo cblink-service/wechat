@@ -2,6 +2,7 @@
 
 namespace Cblink\Service\Wechat;
 
+use Cblink\Service\Wechat\OpenWork\Rewrite\SuiteTicket;
 use EasyWeChat\OpenWork\Application;
 use Hyperf\Utils\Arr;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
@@ -72,17 +73,14 @@ class Factory
         $data['suite_secret'] = Arr::get($response, 'secret');
 
         // 这里需要预先加入 token信息
-        $application = new Application($data, [
-            'provider_access_token' => function($app){
-                return new OpenWork\Rewrite\AccessToken($app);
-            },
-            'suite_access_token' => function($app){
-                return new OpenWork\Rewrite\SuiteAccessToken($app);
-            }
-        ]);
+        $application = new Application($data);
 
         $application->rebind('service', function () use ($client) {
             return $client;
+        });
+
+        $application->rebind('suite_ticket', function ($app) {
+            return new SuiteTicket($app);
         });
 
         $application->rebind('corp', function($app){
