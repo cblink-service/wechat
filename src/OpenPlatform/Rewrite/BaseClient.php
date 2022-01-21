@@ -21,7 +21,7 @@ class BaseClient extends Client
             throw new InvalidArgumentException('Get Url Fail: '. Arr::get($response, 'err_msg'));
         }
 
-        return $response->get('url');
+        return Arr::get($response, 'data.url');
     }
 
     /**
@@ -48,7 +48,7 @@ class BaseClient extends Client
     {
         return $this->getAuthorizationUrl(array_merge($optional,[
             'type' => 'scan',
-            'url' =>  $callbackUrl
+            'url' =>  $callbackUrl,
         ]));
     }
 
