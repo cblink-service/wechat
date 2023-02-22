@@ -12,7 +12,7 @@ class AccessToken extends \EasyWeChat\OpenPlatform\Auth\AccessToken
      *
      * @param array $credentials
      * @param false $toArray
-     * @return array|\EasyWeChat\Kernel\Support\Collection|\Illuminate\Support\Collection|object|\Psr\Http\Message\ResponseInterface|string
+     * @return array|\EasyWeChat\Kernel\Support\Collection|object|\Psr\Http\Message\ResponseInterface|string
      */
     public function requestToken(array $credentials, $toArray = false)
     {
